@@ -4,7 +4,7 @@ import { getUserService } from '../../presentation/users/get-users/get-user';
 
 const routerUsers = Router();
 
-routerUsers.get('/:user_id', getUserService.handle);
+routerUsers.get('/:user_name/:password', getUserService.handle);
 routerUsers.post('/addUser', addUserService.handle);
 
 export { routerUsers };

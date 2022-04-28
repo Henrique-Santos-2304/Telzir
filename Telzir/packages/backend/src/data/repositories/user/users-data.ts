@@ -14,11 +14,10 @@ class UserData implements IUserDataRepository {
     return this.users.push({ ...user, user_id: uuid() });
   }
 
-  async getOne(user_id: string): Promise<UserModel | undefined> {
-    const user = this.users.find((usr) => usr.user_id === user_id);
+  async getOne(user_name: string): Promise<UserModel | undefined> {
+    const user = this.users.find((usr) => usr.user_name === user_name);
     return user;
   }
 }
 
-const userData = new UserData();
-export { userData };
+export { UserData };

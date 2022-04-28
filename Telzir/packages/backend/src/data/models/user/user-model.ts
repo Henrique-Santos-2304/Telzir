@@ -1,6 +1,6 @@
 interface UserModel {
   user_id: string;
-  name: string;
+  user_name: string;
   age: number;
   password: string;
   telephone: string;

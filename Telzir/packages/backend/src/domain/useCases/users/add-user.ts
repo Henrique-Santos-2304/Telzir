@@ -1,13 +1,22 @@
-import { injectable } from 'tsyringe';
-import { userData } from '../../../data/repositories/user/users-data';
+import { inject, injectable } from 'tsyringe';
+import { IUserDataRepository } from '../../../data/protocols/repository/user-queries';
 import { AddUser, IAddUser } from '../../models/user/add-user/add-user';
 
 @injectable()
 class AddUserUseCase implements IAddUser {
-  async apply({ name, password, telephone, age }: AddUser): Promise<boolean> {
+  constructor(
+    @inject('UsersRepository') private userRepository: IUserDataRepository
+  ) {}
+
+  async apply({
+    user_name,
+    password,
+    telephone,
+    age
+  }: AddUser): Promise<boolean> {
     try {
-      if (name && telephone && password && age) {
-        userData.add({ name, password, age, telephone });
+      if (user_name && telephone && password && age) {
+        await this.userRepository.add({ user_name, password, age, telephone });
         return true;
       } else {
         return false;

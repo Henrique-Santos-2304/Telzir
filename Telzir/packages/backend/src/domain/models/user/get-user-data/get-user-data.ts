@@ -1,12 +1,12 @@
 interface UserDataReturn {
   user_id: string;
-  name: string;
+  user_name: string;
   telephone: string;
   age: number;
 }
 
 interface IGetUser {
-  apply(user_id: string): Promise<UserDataReturn | string>;
+  apply(name: string, password: string): Promise<UserDataReturn | Error>;
 }
 
 export { IGetUser, UserDataReturn };

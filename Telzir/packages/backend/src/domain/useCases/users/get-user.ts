@@ -1,5 +1,7 @@
-import { injectable } from 'tsyringe';
+import { AssertionError } from 'assert';
+import { inject, injectable } from 'tsyringe';
 import { UserModel } from '../../../data/models/user/user-model';
+import { IUserDataRepository } from '../../../data/protocols/repository/user-queries';
 import {
   IGetUser,
   UserDataReturn
@@ -7,35 +9,33 @@ import {
 
 @injectable()
 class GetUserUseCase implements IGetUser {
-  private userList: UserModel[];
-
-  constructor() {
-    this.userList = [
-      {
-        user_id: 'henrique',
-        name: 'Henrique',
-        password: '1234',
-        age: 30,
-        telephone: '11-96636-5190'
-      }
-    ];
-  }
-
-  async apply(user_id: string): Promise<UserDataReturn | string> {
+  constructor(
+    @inject('UsersRepository') private usersRepository: IUserDataRepository
+  ) {}
+  async apply(
+    user_name: string,
+    password_user: string
+  ): Promise<UserDataReturn | Error> {
     try {
-      const userSelected = this.userList.find(
-        (user) => user.user_id === user_id
-      );
+      console.log(user_name);
+      const userSelected = await this.usersRepository.getOne(user_name);
       if (!userSelected) {
-        return 'User does not  found';
+        return new Error('User Does Not Found');
       } else {
-        const { password, ...userWithoutPassword } = userSelected;
-        return userWithoutPassword;
+        console.log(`${userSelected.password},   ${password_user}`);
+
+        if (userSelected.password === password_user) {
+          const { password, ...userWithoutPassword } = userSelected;
+          return userWithoutPassword;
+        } else {
+          return new Error('Invalid Credentials');
+        }
       }
     } catch (err) {
+      const { message } = err as Error;
       console.log(`Error ocurred in ${GetUserUseCase.name}`);
       console.log(err);
-      return '';
+      return new Error(message);
     }
   }
 }

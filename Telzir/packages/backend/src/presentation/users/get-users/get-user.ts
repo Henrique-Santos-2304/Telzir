@@ -5,16 +5,19 @@ import { IHandleRequests } from '../../protocols/handle-requests';
 
 class GetUserService implements IHandleRequests {
   async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const { user_id } = req.params;
     try {
+      const { user_name, password } = req.params;
+
       const getUserUseCase = container.resolve(GetUserUseCase);
-      const user = await getUserUseCase.apply(user_id);
-      res.status(200).send(user);
+      const user = await getUserUseCase.apply(user_name, password);
+
+      if (user instanceof Error) {
+        res.status(500).send(user.message);
+      } else res.status(200).send(user);
     } catch (err) {
       console.log(`[ERROR] Error is ocurred in ${GetUserService.name} `);
       console.log(err);
       res.status(500).send('INTERNAL SERVER ERROR');
-      next();
     }
   }
 }
