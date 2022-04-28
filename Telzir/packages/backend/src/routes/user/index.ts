@@ -3,6 +3,6 @@ import { getUserService } from '../../presentation/users/get-users/get-user';
 
 const routerUsers = Router();
 
-routerUsers.get('/', getUserService.handle);
+routerUsers.get('/:user_id', getUserService.handle);
 
 export { routerUsers };
