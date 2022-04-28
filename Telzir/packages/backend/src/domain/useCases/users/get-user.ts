@@ -12,21 +12,27 @@ class GetUserUseCase implements IGetUser {
         user_id: 'henrique',
         name: 'Henrique',
         password: '1234',
-        age: 30
+        age: 30,
+        telephone: '11-96636-5190'
       }
     ];
   }
 
-  async apply(user_id: string): Promise<any> {
+  async apply(user_id: string): Promise<UserDataReturn | string> {
     try {
       const userSelected = this.userList.find(
         (user) => user.user_id === user_id
       );
-      return userSelected || 'User does not  found';
+      if (!userSelected) {
+        return 'User does not  found';
+      } else {
+        const { password, ...userWithoutPassword } = userSelected;
+        return userWithoutPassword;
+      }
     } catch (err) {
       console.log(`Error ocurred in ${GetUserUseCase.name}`);
       console.log(err);
-      return err;
+      return '';
     }
   }
 }
