@@ -6,7 +6,12 @@ interface AddUser {
 }
 
 interface IAddUser {
-  apply({ user_name, password, telephone, age }: AddUser): Promise<boolean>;
+  apply({
+    user_name,
+    password,
+    telephone,
+    age
+  }: AddUser): Promise<void | Error>;
 }
 
 export { AddUser, IAddUser };

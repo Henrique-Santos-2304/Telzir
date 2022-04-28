@@ -17,25 +17,17 @@ class GetUserUseCase implements IGetUser {
     password_user: string
   ): Promise<UserDataReturn | Error> {
     try {
-      console.log(user_name);
       const userSelected = await this.usersRepository.getOne(user_name);
-      if (!userSelected) {
-        return new Error('User Does Not Found');
-      } else {
-        console.log(`${userSelected.password},   ${password_user}`);
 
+      if (!userSelected) return new Error('User Does Not Found');
+      else {
         if (userSelected.password === password_user) {
           const { password, ...userWithoutPassword } = userSelected;
           return userWithoutPassword;
-        } else {
-          return new Error('Invalid Credentials');
-        }
+        } else return new Error('Invalid Credentials');
       }
     } catch (err) {
-      const { message } = err as Error;
-      console.log(`Error ocurred in ${GetUserUseCase.name}`);
-      console.log(err);
-      return new Error(message);
+      return ServiceErrorData(GetUserUseCase.name, err as Error);
     }
   }
 }

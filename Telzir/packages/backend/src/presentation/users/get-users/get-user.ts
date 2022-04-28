@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { container } from 'tsyringe';
 import { GetUserUseCase } from '../../../domain/useCases/users/get-user';
+import { InternalServerError } from '../../helpers/internal-error-log';
 import { IHandleRequests } from '../../protocols/handle-requests';
 
 class GetUserService implements IHandleRequests {
@@ -15,12 +16,9 @@ class GetUserService implements IHandleRequests {
         res.status(500).send(user.message);
       } else res.status(200).send(user);
     } catch (err) {
-      console.log(`[ERROR] Error is ocurred in ${GetUserService.name} `);
-      console.log(err);
-      res.status(500).send('INTERNAL SERVER ERROR');
+      InternalServerError(GetUserService.name, err, res);
     }
   }
 }
 
-const getUserService = new GetUserService();
-export { GetUserService, getUserService };
+export const getUserService = new GetUserService();
