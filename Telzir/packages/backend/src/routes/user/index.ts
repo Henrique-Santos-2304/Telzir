@@ -1,11 +1,8 @@
 import { Router } from 'express';
+import { getUserService } from '../../presentation/users/get-users/get-user';
 
 const routerUsers = Router();
 
-routerUsers.get('/', (req, res) => {
-  const messageWelcome = 'Hii User... Welcome to the Telzier';
-  console.log(messageWelcome);
-  res.send(messageWelcome);
-});
+routerUsers.get('/', getUserService.handle);
 
 export { routerUsers };
