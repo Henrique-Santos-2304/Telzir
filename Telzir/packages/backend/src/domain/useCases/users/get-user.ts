@@ -1,6 +1,9 @@
 import { injectable } from 'tsyringe';
 import { UserModel } from '../../../data/models/user/user-model';
-import { IGetUser } from '../../protocols/users/get-user';
+import {
+  IGetUser,
+  UserDataReturn
+} from '../../models/user/get-user-data/get-user-data';
 
 @injectable()
 class GetUserUseCase implements IGetUser {
