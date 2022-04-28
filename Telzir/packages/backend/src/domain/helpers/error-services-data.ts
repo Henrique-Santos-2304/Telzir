@@ -3,3 +3,5 @@ const ServiceErrorData = (className: string, err: Error) => {
   console.log(err);
   return new Error(err.message);
 };
+
+export { ServiceErrorData };

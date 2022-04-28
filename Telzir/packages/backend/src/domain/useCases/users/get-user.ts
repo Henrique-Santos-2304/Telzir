@@ -6,6 +6,9 @@ import {
   IGetUser,
   UserDataReturn
 } from '../../models/user/get-user-data/get-user-data';
+import bcrypt from 'bcrypt';
+import { ServiceErrorData } from '../../helpers/error-services-data';
+import { createJwt } from '../../util-actions/create-token-jwt';
 
 @injectable()
 class GetUserUseCase implements IGetUser {
@@ -18,13 +21,17 @@ class GetUserUseCase implements IGetUser {
   ): Promise<UserDataReturn | Error> {
     try {
       const userSelected = await this.usersRepository.getOne(user_name);
+      const comparePassword =
+        userSelected &&
+        (await bcrypt.compare(password_user, userSelected.password));
 
-      if (!userSelected) return new Error('User Does Not Found');
-      else {
-        if (userSelected.password === password_user) {
-          const { password, ...userWithoutPassword } = userSelected;
-          return userWithoutPassword;
-        } else return new Error('Invalid Credentials');
+      if (userSelected && comparePassword) {
+        const { user_name, telephone } = userSelected;
+        const token = createJwt({ user_name, telephone });
+        const { password, ...userWithoutPassword } = userSelected;
+        return { ...userWithoutPassword, token };
+      } else {
+        return new Error('Invalid Credentials');
       }
     } catch (err) {
       return ServiceErrorData(GetUserUseCase.name, err as Error);

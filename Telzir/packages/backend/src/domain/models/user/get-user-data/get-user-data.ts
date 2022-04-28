@@ -3,6 +3,7 @@ interface UserDataReturn {
   user_name: string;
   telephone: string;
   age: number;
+  token: string;
 }
 
 interface IGetUser {
