@@ -1,4 +1,4 @@
-import ContentInputs from "components/globalComponents/ContentInputs";
+import ContentInputs from "components/globalComponents/Forms/ContentInputs";
 import { useRef } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";

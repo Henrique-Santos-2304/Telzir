@@ -1,22 +1,12 @@
-// import { yupResolver } from "@hookform/resolvers/yup";
-
-import ContentInputs from "components/globalComponents/ContentInputs";
+import ContentInputs from "components/globalComponents/Forms/ContentInputs";
 import { useRef } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-// import * as Yup from "yup";
+
 import * as S from "./styles";
 import { schemaLogin } from "./controller/yup-resolver";
 import { handleLogin } from "./controller/login-user-service";
-
-// const schema = Yup.object({
-//   user: Yup.string()
-//     .required("Por favor digite um nome de usuário")
-//     .min(3, "O nome deve ter mais de 3 letras"),
-//   password: Yup.string()
-//     .required("Por favor digite uma senha")
-//     .min(3, "A senha deve ter pelo menos 3 caracteres"),
-// }).required();
+import { useRouter } from "next/router";
 
 type FormData = {
   user_name: string;
@@ -24,6 +14,8 @@ type FormData = {
 };
 
 const FormValidateLogin = () => {
+  const router = useRouter();
+
   const {
     handleSubmit,
     register,
@@ -34,6 +26,7 @@ const FormValidateLogin = () => {
   const onSubmit = handleSubmit(async (data) => {
     const { user_name, password } = data;
     await handleLogin({ user_name, password });
+    router.push("/check-priece-calls");
   });
 
   const { user_name, password } = errors;
