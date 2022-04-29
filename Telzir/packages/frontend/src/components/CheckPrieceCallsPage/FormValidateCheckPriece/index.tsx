@@ -5,17 +5,13 @@ import { useForm } from "react-hook-form";
 
 import ContentInputs from "components/globalComponents/Forms/ContentInputs";
 import { schemaCheckPriece } from "./controller/yup-resolver";
-import { handleCheckPriece } from "./controller/check-priece-service";
+import {
+  formCalcs,
+  handleCheckPriece,
+} from "./controller/check-priece-service";
 import SelectOptions from "components/globalComponents/Forms/SelectOptions";
 import { optionsDDDs, optionsPlains } from "./utils/optionSelectMock";
 import { returnDataProps } from "../MainCheckPrieceCalls/controller/populate-data-box";
-
-type FormData = {
-  origin: string;
-  destiny: string;
-  time: string;
-  plain: string;
-};
 
 type formProps = {
   callbackData: (resultData: returnDataProps) => void;
@@ -25,7 +21,7 @@ const FormValidateCheckPriece = ({ callbackData }: formProps) => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<FormData>({ resolver: yupResolver(schemaCheckPriece) });
+  } = useForm<formCalcs>({ resolver: yupResolver(schemaCheckPriece) });
   const formRef = useRef<HTMLFormElement>(null);
 
   const onSubmit = handleSubmit(async (data) => {
