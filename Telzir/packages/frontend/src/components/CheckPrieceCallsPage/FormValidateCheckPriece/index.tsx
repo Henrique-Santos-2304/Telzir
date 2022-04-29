@@ -26,7 +26,7 @@ const FormValidateCheckPriece = ({ callbackData }: formProps) => {
 
   const onSubmit = handleSubmit(async (data) => {
     const { origin, destiny, time, plain } = data;
-    console.log(data);
+
     const resultData = await handleCheckPriece({
       origin,
       destiny,

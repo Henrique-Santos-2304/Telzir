@@ -42,7 +42,7 @@ const MainCheckPrieceCalls = () => {
       {modalResultCalc && (
         <ModalCals closeModal={closeModal}>
           {" "}
-          <ContentsBoxsResults arrayResult={mockDataBox} />{" "}
+          <ContentsBoxsResults arrayResult={arrayCalc} />{" "}
         </ModalCals>
       )}
     </S.Container>

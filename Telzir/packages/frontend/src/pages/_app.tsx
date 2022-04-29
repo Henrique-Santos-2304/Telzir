@@ -4,19 +4,21 @@ import GlobalStyles from "styles/global";
 import { ThemeProvider } from "styled-components";
 import theme from "styles/theme";
 import React from "react";
+import { UseLoginProvider } from "hooks/presentation/useLoginAuth";
 
 function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
-      <Head>
-        <title>SoilTech</title>
-        <link rel="shortcut icon" href="/logos/logo.png" />
-        <link rel="apple-touch-icon" href="/logos/logo.png" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="description" content="Soil tech Tecnologias de Irrigação" />
-      </Head>
-      <Component {...pageProps} />
-      <GlobalStyles />
+      <UseLoginProvider>
+        <Head>
+          <title>Telzir</title>
+
+          {/* <link rel="manifest" href="/manifest.json" /> */}
+          <meta name="description" content="Telzir Telefonia" />
+        </Head>
+        <Component {...pageProps} />
+        <GlobalStyles />
+      </UseLoginProvider>
     </ThemeProvider>
   );
 }

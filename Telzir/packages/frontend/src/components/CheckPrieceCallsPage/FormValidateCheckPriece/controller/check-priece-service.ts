@@ -1,7 +1,7 @@
 import { returnDataProps } from "components/CheckPrieceCallsPage/MainCheckPrieceCalls/controller/populate-data-box";
 
 type DDDsProps = "011" | "016" | "017" | "018";
-type planProps = "FaleMais30" | "FaleMais60" | "FaleMais120";
+type planProps = "TalkMore30" | "TalkMore60" | "TalkMore120";
 export type formCalcs = {
   origin: DDDsProps;
   destiny: DDDsProps;
@@ -20,9 +20,9 @@ const switchTablePrices = (origin: DDDsProps, destiny: DDDsProps): number => {
 };
 
 const switchTablePlan = (plan: planProps): number => {
-  if (plan === "FaleMais30") return 30;
-  else if (plan === "FaleMais60") return 60;
-  else if (plan === "FaleMais120") return 120;
+  if (plan === "TalkMore30") return 30;
+  else if (plan === "TalkMore60") return 60;
+  else if (plan === "TalkMore120") return 120;
   else return 0;
 };
 
@@ -41,6 +41,10 @@ const prieceWithPlain = (
     return 0;
   }
 };
+
+const priceCurrencyBr = (price: number): string =>
+  price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
 const handleCheckPriece = async ({
   origin,
   destiny,
@@ -52,12 +56,11 @@ const handleCheckPriece = async ({
     const priecePerMinute = switchTablePrices(origin, destiny);
     const minutesPlan = switchTablePlan(plain);
 
-    const resultWithoutPlain = timeNumber * priecePerMinute;
-    const resultWithPlain = prieceWithPlain(
-      timeNumber,
-      minutesPlan,
-      priecePerMinute
-    );
+    const withoutPlain = timeNumber * priecePerMinute;
+    const withPlain = prieceWithPlain(timeNumber, minutesPlan, priecePerMinute);
+
+    const resultWithPlain = priceCurrencyBr(withPlain);
+    const resultWithoutPlain = priceCurrencyBr(withoutPlain);
 
     const arrayResult: returnDataProps = {
       dddOrigin: origin,

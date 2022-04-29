@@ -3,8 +3,8 @@ export type returnDataProps = {
   dddDestiny: string;
   plain: string;
   timeCall: string;
-  resultWithoutPlain: number;
-  resultWithPlain: number;
+  resultWithoutPlain: string;
+  resultWithPlain: string;
 };
 
 export type boxData = {
@@ -25,8 +25,8 @@ const populateBox = ({
     { txtKey: "Destino", txtValue: dddDestiny },
     { txtKey: "Tempo", txtValue: timeCall },
     { txtKey: "Plano", txtValue: plain },
-    { txtKey: "Com Plano", txtValue: resultWithPlain.toString() },
-    { txtKey: "Sem Plano", txtValue: resultWithoutPlain.toString() },
+    { txtKey: "Com Plano", txtValue: resultWithPlain },
+    { txtKey: "Sem Plano", txtValue: resultWithoutPlain },
   ];
 
   return populateArray;
