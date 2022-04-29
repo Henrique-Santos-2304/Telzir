@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { container } from 'tsyringe';
-import { GetUserUseCase } from '../../../domain/useCases/users/get-user';
-import { InternalServerError } from '../../helpers/internal-error-log';
-import { IHandleRequests } from '../../protocols/handle-requests';
+import { GetUserUseCase } from '../../../../domain/useCases/users/get-user';
+import { InternalServerError } from '../../../helpers/internal-error-log';
+import { IHandleRequests } from '../../../protocols/handle-requests';
 
 class GetUserService implements IHandleRequests {
   async handle(req: Request, res: Response, next: NextFunction): Promise<void> {

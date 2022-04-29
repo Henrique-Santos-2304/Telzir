@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { addUserService } from '../../presentation/users/add-user/add-user';
-import { getUserService } from '../../presentation/users/get-users/get-user';
+import { addUserService } from '../../presentation/data/users/add-user/add-user';
+import { getUserService } from '../../presentation/data/users/get-users/get-user';
 
 const routerUsers = Router();
 
