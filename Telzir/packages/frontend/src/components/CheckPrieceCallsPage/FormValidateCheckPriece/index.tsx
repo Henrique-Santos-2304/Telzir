@@ -8,6 +8,7 @@ import { schemaCheckPriece } from "./controller/yup-resolver";
 import { handleCheckPriece } from "./controller/check-priece-service";
 import SelectOptions from "components/globalComponents/Forms/SelectOptions";
 import { optionsDDDs, optionsPlains } from "./utils/optionSelectMock";
+import { returnDataProps } from "../MainCheckPrieceCalls/controller/populate-data-box";
 
 type FormData = {
   origin: string;
@@ -16,7 +17,10 @@ type FormData = {
   plain: string;
 };
 
-const FormValidateCheckPriece = () => {
+type formProps = {
+  callbackData: (resultData: returnDataProps) => void;
+};
+const FormValidateCheckPriece = ({ callbackData }: formProps) => {
   const {
     handleSubmit,
     register,
@@ -26,12 +30,15 @@ const FormValidateCheckPriece = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     const { origin, destiny, time, plain } = data;
-    await handleCheckPriece({
+    console.log(data);
+    const resultData = await handleCheckPriece({
       origin,
       destiny,
       time,
       plain,
     });
+
+    resultData && callbackData(resultData);
   });
 
   return (
@@ -56,7 +63,7 @@ const FormValidateCheckPriece = () => {
         <S.ContentSelect>
           <SelectOptions
             label="Plano"
-            id="destiny"
+            id="plain"
             register={register}
             options={optionsPlains}
           />
@@ -66,8 +73,8 @@ const FormValidateCheckPriece = () => {
         <ContentInputs
           error={errors.time}
           label="TEMPO DE CHAMADA"
-          id="destiny"
-          type="text"
+          id="time"
+          type="number"
           placeholder="Tempo de chamada"
           register={register}
         />

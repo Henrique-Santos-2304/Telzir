@@ -3,7 +3,7 @@ export const Container = styled.div`
   ${({ theme }) => css`
     width: 14rem;
     padding: 0.6rem 1.2rem;
-    background: rgba(0, 0, 0, 0.6);
+    background: ${theme.colors.primaryLight};
     border-radius: 0.8rem;
     margin-top: 5rem;
     margin-left: 0.3rem;
